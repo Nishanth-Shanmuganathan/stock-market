@@ -1,0 +1,141 @@
+<div class="container-fluid">
+  <app-header></app-header>
+</div>
+<mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+<main *ngIf="!isLoading">
+  <div class="container-fluid">
+    <div class="pop-up row justify-content-around align-items-center">
+      <div
+        class="pop-up__card col-* m-3 mt-sm-5 mb-sm-5"
+        *ngFor="let item of stocks"
+        [ngClass]="{ 'pop-up__card-active': item.subtitle === selectedIndex }"
+        (click)="selectedIndex = item.subtitle"
+        (click)="changeIndex()"
+      >
+        <app-mini-card [stock]="item"></app-mini-card>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid mt-4 mb-4 border-bottom">
+    <div class="row justify-content-center">
+      <div class="col-10">
+        <div class="row">
+          <mat-form-field class="col-*">
+            <mat-label>Index</mat-label>
+            <mat-select
+              [(ngModel)]="selectedIndex"
+              (ngModelChange)="changeIndex()"
+            >
+              <mat-option *ngFor="let item of stocks" [value]="item.subtitle">
+                {{ item.subtitle | titlecase }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="row border-bottom pb-3">
+          <div class="col-*">
+            <span class="specific-index__title">
+              {{ index.title | uppercase }}
+            </span>
+          </div>
+        </div>
+        <div class="row pt-3">
+          <div class="col-12 col-sm-6">
+            <div class="row pb-3 justify-content-center">
+              <div class="col-*">
+                <span class="specific-index__head">
+                  {{ index.data.Volume | number: "0.0-2" }}
+                </span>
+              </div>
+            </div>
+            <div class="row justify-content-center">
+              <div class="col-*">
+                <span *ngIf="index.data.Diff >= 0" class="text-success">
+                  <mat-icon>arrow_drop_up</mat-icon>
+                </span>
+                <span *ngIf="index.data.Diff < 0" class="text-danger">
+                  <mat-icon>arrow_drop_down</mat-icon>
+                </span>
+              </div>
+              <div class="col-*">
+                <span
+                  [ngClass]="{
+                    'text-success': index.data.Diff >= 0,
+                    'text-danger': index.data.Diff < 0
+                  }"
+                  class="specific-index__gain"
+                >
+                  {{ index.data.Diff | number }}
+                  ({{ index.data.Diff / index.data.High | percent }})
+                </span>
+              </div>
+            </div>
+            <div class="row pb-3 justify-content-center">
+              <div class="col-*">
+                <span class="specific-index__mini-text text-muted">
+                  As on {{ index.data.Date | date }}
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6">
+            <div class="row">
+              <div class="col-">
+                <span class="specific-index__mini-text text-muted"
+                  >Day Range</span
+                >
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-">
+                <span class="specific-index__mini-text text-danger">
+                  ( {{ index.data.Low | number: "0.0-0" }} ) L
+                </span>
+                <mat-slider
+                  color="primary"
+                  [max]="index.data.High"
+                  [min]="index.data.Low"
+                  [value]="index.data.Close"
+                  readonly="true"
+                ></mat-slider>
+                <span class="specific-index__mini-text text-success">
+                  H ( {{ index.data.High | number: "0.0-0" }} )
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid border-bottom mb-4">
+    <div class="row">
+      <mat-tab-group class="col-12 row">
+        <mat-tab label="Overview">
+          <table class="table col-12 col-sm-10 col-md-8 m-auto">
+            <tr>
+              <th>Open</th>
+              <td>{{ index.data.Open | number: "0.0-0" }}</td>
+              <th>High</th>
+              <td>{{ index.data.High | number: "0.0-0" }}</td>
+            </tr>
+            <tr>
+              <th>Close</th>
+              <td>{{ index.data.Close | number: "0.0-0" }}</td>
+              <th>Low</th>
+              <td>{{ index.data.Low | number: "0.0-0" }}</td>
+            </tr>
+            <tr>
+              <th>Previous Close</th>
+              <td>{{ index.data["Adj Close"] | number: "0.0-0" }}</td>
+              <th>Volume</th>
+              <td>{{ index.data.Volume | number: "0.0-0" }}</td>
+            </tr>
+          </table>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</main>

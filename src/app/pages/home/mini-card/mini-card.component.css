@@ -1,0 +1,31 @@
+mat-card {
+  width: fit-content;
+  height: fit-content;
+  min-width: 25rem;
+  min-height: 7rem;
+  padding: 1rem !important;
+  background-image: linear-gradient(to top, #2a40b9 10%, white 10%);
+  cursor: pointer;
+}
+
+.top {
+  display: block;
+}
+
+.top__text-muted {
+  font-weight: 400;
+}
+
+.top__text-dark {
+  font-weight: 600;
+}
+
+.bottom__text-big {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.bottom__text-group {
+  font-size: 1.3rem;
+  font-weight: 500;
+}

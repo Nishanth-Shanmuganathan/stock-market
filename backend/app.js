@@ -6,6 +6,7 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 
 const { authRouter, authenticate } = require('./src/routes/authentication')
+const { stockRouter } = require('./src/routes/stock-index')
 
 const app = express()
 app.use(express.json())
@@ -13,7 +14,7 @@ app.use(bodyParser.json())
 app.use(cors())
 
 app.use('/authentication', authRouter)
-// app.use('/fetchBookings',authenticate ,seatsRouter)
+app.use('/stock-index', authenticate, stockRouter)
 
 mongoose.connect(process.env.DB_URL, {
   useCreateIndex: true,

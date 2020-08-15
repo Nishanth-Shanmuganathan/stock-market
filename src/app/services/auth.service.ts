@@ -1,3 +1,4 @@
+import { UIService } from './ui.service';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -24,12 +25,13 @@ export class AuthService {
   token: string;
   loggedIn = new Subject<string>();
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router,
+    private uiService: UIService) { }
 
   registerUser(auth: RegisterDetails) {
     return this.http
       .post<{ token: string }>(
-        environment.server_url + '/authentication/register',
+        environment.server_url + 'authentication/register',
         auth
       )
       .pipe(
@@ -37,6 +39,7 @@ export class AuthService {
           this.token = res.token;
           localStorage.setItem('token', this.token);
           this.loggedIn.next(this.token);
+          console.log('token fetched');
         })
       );
   }
@@ -44,7 +47,7 @@ export class AuthService {
   loginUser(auth: LoginDetails) {
     return this.http
       .post<{ token: string }>(
-        environment.server_url + '/authentication/login',
+        environment.server_url + 'authentication/login',
         auth
       )
       .pipe(
@@ -56,13 +59,20 @@ export class AuthService {
       );
   }
 
+  readToken() {
+    const token = localStorage.getItem('token');
+    if (!token) { return; }
+    this.token = token;
+    this.loggedIn.next(token);
+  }
 
   logout() {
     this.token = null;
     localStorage.removeItem('token');
     this.loggedIn.next();
     if (!this.token) {
-      this.router.navigate(['/auth']);
+      this.uiService.message('Logout successful...');
+      this.router.navigate(['auth', 'login']);
     }
   }
 

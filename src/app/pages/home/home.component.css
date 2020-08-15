@@ -1,0 +1,44 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+.pop-up__card {
+  transition: all 500ms ease;
+}
+
+.pop-up__card-active {
+  transform: scale(1.05);
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
+}
+
+mat-form-field {
+  width: 6rem;
+}
+
+.specific-index__title {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.specific-index__head {
+  font-size: 3rem;
+  font-weight: 800;
+}
+
+.specific-index__gain {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.specific-index__mini-text {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+
+
+td,
+th {
+  padding: 1rem;
+}

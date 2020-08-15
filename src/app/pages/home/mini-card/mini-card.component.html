@@ -1,0 +1,19 @@
+<mat-card>
+  <div class="top row col-12">
+    <span class="top__text-muted">{{ stock.subtitle | uppercase }}</span> <br />
+    <span class="top__text-dark">{{ stock.title | uppercase }}</span>
+  </div>
+  <div
+    class="bottom row justify-content-between align-items-center ml-0 mr-0 mt-2"
+    *ngIf="stock.data"
+  >
+    <span class="bottom__text-big col-*">
+      {{ stock.data.Volume | number: "0.0-2" }}
+    </span>
+    <div class="bottom__text-group">
+      <span class="text-muted">Prev Close</span>
+      <br />
+      <span>{{ stock.data["Adj Close"] | number: "0.0-2" }}</span>
+    </div>
+  </div>
+</mat-card>

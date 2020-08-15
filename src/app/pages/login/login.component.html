@@ -1,4 +1,8 @@
-<form [formGroup]="loginForm" (ngSubmit)="login()">
+<form
+  [formGroup]="loginForm"
+  (ngSubmit)="login()"
+  class="d-flex flex-column justify-content-between"
+>
   <mat-form-field appearance="fill">
     <mat-label>Email Id</mat-label>
     <input
@@ -44,7 +48,13 @@
     </button>
   </mat-form-field>
   <button class="form-buttons" mat-raised-button color="primary">Login</button>
-  <button class="form-buttons" type="button" mat-raised-button color="accent">
+  <button
+    class="form-buttons"
+    type="button"
+    mat-raised-button
+    color="accent"
+    [routerLink]="['..', 'register']"
+  >
     Register
   </button>
 </form>

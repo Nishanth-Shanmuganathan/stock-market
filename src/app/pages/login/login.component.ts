@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
   helperPassword = false;
+  isLoading = false;
 
   constructor(
     private authService: AuthService,
@@ -27,13 +28,14 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
-      email: new FormControl('nishanth@test', [Validators.required, Validators.email]),
-      password: new FormControl('aaaaaaaaaa', [Validators.required, Validators.minLength(10)])
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      password: new FormControl(null, [Validators.required, Validators.minLength(10)])
     });
   }
 
   login() {
     if (this.loginForm.invalid) { return; }
+    this.isLoading = true;
     const loginCred: LoginDetails = {
       email: this.loginForm.value.email,
       password: this.loginForm.value.password,
@@ -44,6 +46,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/']);
       }, err => {
         this.uiService.message(err.error.message);
+        this.isLoading = false;
       });
   }
 }

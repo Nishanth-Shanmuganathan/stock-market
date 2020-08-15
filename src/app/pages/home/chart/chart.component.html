@@ -1,1 +1,40 @@
-<p>chart works!</p>
+<div class="container mt-4 mb-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-10 row">
+      <mat-form-field class="organization col-8 col-sm-5 col-md-3">
+        <mat-label> Organization</mat-label>
+        <mat-select
+          [(ngModel)]="organization"
+          (ngModelChange)="fetchOrganization()"
+        >
+          <mat-option value="reliance">Reliance Industries Ltd.</mat-option>
+          <mat-option value="tata">Tata Steel Ltd.</mat-option>
+          <mat-option value="eicher">Eicher Motors Ltd.</mat-option>
+          <mat-option value="ashok">Ashok Leyland Ltd.</mat-option>
+          <mat-option value="cipla">Cipla Ltd.</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="year col-4 col-sm-3 col-md-2">
+        <mat-label> Year</mat-label>
+        <mat-select [(ngModel)]="year" (ngModelChange)="fetchOrganization()">
+          <mat-option value="2020">2020</mat-option>
+          <mat-option value="2019">2019</mat-option>
+          <mat-option value="2018">2018</mat-option>
+          <mat-option value="2017">2017</mat-option>
+          <mat-option value="2016">2016</mat-option>
+          <mat-option value="2015">2015</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-11 col-md-8">
+      <div class="card">
+        <div class="chart">
+          <canvas class="chart-canvas" id="chart-sales"> </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -81,7 +81,7 @@
     </button>
   </mat-form-field>
   <button class="form-buttons" mat-raised-button color="primary">
-    Register
+    {{ !isLoading ? "Register" : "Registering..." }}
   </button>
   <button
     class="form-buttons"

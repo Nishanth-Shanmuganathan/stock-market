@@ -23,4 +23,15 @@ export class DataService {
       }));
   }
 
+  fetchOrg(org: string, year: string) {
+    console.log(environment.server_url + 'stock-index/organization/' + org + '/' + year);
+    return this.http.get<{ data: number[] }>(environment.server_url + 'stock-index/organization/' + org + '/' + year)
+      .pipe(map(res => {
+        return res.data.map(ele => {
+          if (!ele) { return 0; }
+          return ele;
+        });
+      }));
+  }
+
 }

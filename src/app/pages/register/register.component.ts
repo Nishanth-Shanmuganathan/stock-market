@@ -18,6 +18,7 @@ interface RegisterDetails {
 export class RegisterComponent implements OnInit {
 
   registerForm: FormGroup;
+  isLoading = false;
   helperPassword = false;
   helperConfirmPassword = false;
 
@@ -46,6 +47,7 @@ export class RegisterComponent implements OnInit {
 
   register() {
     if (this.registerForm.invalid) { return; }
+    this.isLoading = true;
     const registerCred: RegisterDetails = {
       email: this.registerForm.value.email,
       password: this.registerForm.value.password,
@@ -57,6 +59,7 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['/']);
       }, err => {
         this.uiService.message(err.error.message);
+        this.isLoading = false;
       });
   }
 }

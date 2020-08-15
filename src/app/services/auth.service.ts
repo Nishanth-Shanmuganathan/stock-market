@@ -25,7 +25,9 @@ export class AuthService {
   token: string;
   loggedIn = new Subject<string>();
 
-  constructor(private http: HttpClient, private router: Router,
+  constructor(
+    private http: HttpClient,
+    private router: Router,
     private uiService: UIService) { }
 
   registerUser(auth: RegisterDetails) {

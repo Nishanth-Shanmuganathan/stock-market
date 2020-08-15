@@ -21,9 +21,27 @@ stockRouter.get('', async (req, res, next) => {
         }
       }
     })
-    res.send({ data })
+    res.status(200).send({ data })
   } catch (error) {
-    console.log(error);
+    res.status(400).send({ message: 'Unable to fetch. Try again...' })
+  }
+})
+
+stockRouter.get('/organization/:name/:year', async (req, res, next) => {
+  let result = new Array(12).fill(0)
+  const org = req.params.name;
+  const year = req.params.year;
+  try {
+    const data = await db.collection(org).find({ Date: { "$regex": year } }).toArray()
+    data.forEach(ele => {
+      const month = ele.Date.split('-')[1]
+      if (ele.Volume > 0) {
+        result[month - 1] += (+ele.Volume) / 10000000
+      }
+    })
+    res.status(200).send({ data: result })
+  } catch (error) {
+    res.status(400).send({ message: 'Unable to fetch. Try again...' })
   }
 })
 

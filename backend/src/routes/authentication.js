@@ -16,16 +16,16 @@ authRouter.post('/login', async (req, res) => {
   try {
     const fetchedUser = await User.findOne({ email })
     if (!fetchedUser) {
-      return res.status(401).json({
-        message: "AUTHENTICATION_DENIED"
+      return res.status(400).json({
+        message: "Invalid credentials..."
       })
     }
 
 
     const passwordMatch = await bcrypt.compare(password, fetchedUser.password)
     if (!passwordMatch) {
-      return res.status(401).json({
-        message: "AUTHENTICATION_DENIED"
+      return res.status(400).json({
+        message: "Invalid credentials..."
       })
     }
 
@@ -36,8 +36,8 @@ authRouter.post('/login', async (req, res) => {
     })
   } catch (error) {
     console.log(error);
-    return res.status(401).json({
-      message: 'AUTHENTICATION_DENIED',
+    return res.status(400).json({
+      message: 'Invalid credentials...',
     })
   }
 })
@@ -47,7 +47,7 @@ authRouter.post('/register', async (req, res) => {
   const confirm = req.body.confirmPassword
   if (password !== confirm) {
     res.status(400).json({
-      message: 'PASSWORD_MISMATCH'
+      message: 'Passwords mismatch...'
     })
   }
 
@@ -67,7 +67,7 @@ authRouter.post('/register', async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(400).json({
-      message: 'EMAIL_ALREADY_EXISTS'
+      message: 'Email already exits...'
     })
   }
 })
@@ -79,8 +79,8 @@ authenticate = (req, res, next) => {
     req.body._id = id.id
     next()
   } catch {
-    res.status(401).json({
-      message: 'AUTHENTICATION_DENIED',
+    res.status(400).json({
+      message: 'Authentication denied...',
     })
   }
 }

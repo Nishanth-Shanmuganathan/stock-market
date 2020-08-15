@@ -16,6 +16,12 @@ app.use(cors())
 app.use('/authentication', authRouter)
 app.use('/stock-index', authenticate, stockRouter)
 
+app.use('/', express.static(path.join(__dirname, 'stock-market')))
+
+app.use((req, res, next) => {
+  res.sendfile(path.join(__dirname, 'stock-market', 'index.html'))
+})
+
 mongoose.connect(process.env.DB_URL, {
   useCreateIndex: true,
   useNewUrlParser: true,
